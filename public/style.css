@@ -4,31 +4,28 @@ body{
     background-image: url('./kisspng-gradient-desktop-wallpaper-color-background-5ab88c172773b8.5174360515220439271616.png');
     font-family: 'Barlow', sans-serif;
     color: white;
+    height: 100vh;
+}
+#app{
+    height: inherit;
 }
 
-#weather-widget{
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.current-weather{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#current-weather, #weather-forecast{
     background-color: rgba(240, 248, 255, .5);
-    width: 60%;
-    height: 50%;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 2, 3, 0.3);
-    padding: 10px;
+    padding: 15px;
 }
 
+#current-weather{
+    width: 100%;
+}
+#weather-forecast{
+    margin-top: 20px;
+    width: 100%;
+}
 .city-name{
-    font-size: 3rem;
+    font-size: 3.5rem;
 }
 .temp-wrap{
     position: relative;
@@ -37,25 +34,132 @@ body{
 }
 .current-temp{
     position: absolute;
-    top: -30px;
     font-size: 8rem;
 }
 .degree-symbol{
     position: absolute;
-    right: 0;
+    right: 20px;
+    top: 30px;
     font-size: 4rem;
 }
-.current-day{
-    font-size: 1.2rem;
+.current-day, .weather-desc, .daily-forecast{
+    font-size: 1.5rem;
+}
+.daily-forecast{
+    margin-top: 15px;
+    text-align: end;
+}
+.daily-forecast span:last-child{
+    margin-left: 20px;
+    
+}
+.icon-big{
+    width: 180px;
+    height: 180px;
+}
+.icon-small{
+    width: 50px;
+    height: 50px;
 }
 .icon-sunny{
     background-image: url('./weather-vector-icons/sunny.png');
     background-size: contain;
-    width: 170px;
-    height: 170px;
+   
 }
 
 .icon-partly-cloudy{
     background-image: url('./weather-vector-icons/partly-cloudy.png');
     background-size: contain;
+}
+.humidity-info i{
+    margin-right: 5px;
+}
+
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-5ths {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (max-width: 992px) {
+    .col-md-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (max-width: 767px) {
+    .col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+    .current-temp{
+        font-size: 6rem;
+    }
+    .degree-symbol{
+        font-size: 3rem;
+        right: 0;
+    }
+    .city-name{
+        font-size: 3rem;
+    }
+    .current-day, .weather-desc, .daily-forecast {
+        font-size: 1.2rem;
+    }
+    .icon-big{
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media(max-width: 576px){
+    #current-weather, #weather-forecast{
+        padding: 10px;
+    }
+    p{
+        font-size: .8rem;
+    }
+    .col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+
+    .icon-big{
+        width: 100px;
+        height: 100px;
+    }
+    .city-name{
+        font-size: 2.5rem;
+    }
+    .daily-forecast{
+        text-align: start;
+        margin-top: 0;
+    }
+    .current-temp{
+        font-size: 4rem;
+        margin-left: 15px;
+    }
+    .degree-symbol{
+        font-size: 2rem;
+        right: 0;
+    }
+    .current-day, .weather-desc, .daily-forecast {
+        font-size: 1rem;
+    }
 }
