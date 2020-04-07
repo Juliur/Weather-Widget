@@ -52,8 +52,8 @@
       weatherData() {
         if(this.$store.state.dataIsReceived){
          return this.$store.state.weather;
-        } 
-        return null
+        }
+        return null;
       },
       city(){
         return "Kyiv"
@@ -67,10 +67,11 @@
         return date
       },
       getWeatherClass(){
-        // if(!this.$store.state.dataIsReceived) return "no-icon" ;
-        //   let weatherIcon = this.weatherData.currentConditions.WeatherIcon;
-        //   let weatherIconMap = {
-        //     1: "icon-sunny",
+        if(!this.$store.state.dataIsReceived) return "no-icon" ;
+        let weatherIcon = this.weatherData.current.weather[0]["icon"];
+        let weatherIconMap = {
+          "01d": "icon-sunny",
+        }
         //     2: "icon-partly-cloudy",
         //     3: "icon-partly-cloudy",
         //     4: "icon-partly-cloudy",
@@ -101,53 +102,47 @@
         //     43: "icon-showers-moon",
         //     44: "icon-showers-moon",
         //   }
-        //   let result = weatherIconMap[weatherIcon];
-        //   if(!weatherIconMap[weatherIcon]){
-        //   result = "no-icon"
-        //   }
-        // return result
-        return "icon-sunny"
+        let result = weatherIconMap[weatherIcon];
+        if(!weatherIconMap[weatherIcon]){
+          result = "no-icon"
+        }
+        return result
       },
       getWeatherDescription(){
-      //   if(this.weatherData.currentConditions){
-      //     let desc = this.weatherData.currentConditions.WeatherText;
-      //     return desc
-      //   }
-      //  return "N/A"
-      return "Sunny"
+        if(this.weatherData !== null){
+          let desc = this.weatherData.current.weather[0]["description"];
+          return desc
+        }
+       return "N/A"
       },
       temperature(){
-        // if(this.weatherData.currentConditions){
-        //   let temp = Math.floor(this.weatherData.currentConditions.Temperature.Metric.Value);
-        //   return temp
-        // }
-        // return "N/A"
-        return "14"
+        if(this.weatherData !== null){
+          let temp = Math.round(this.weatherData.current.temp);
+          return temp
+        }
+        return "N/A"
       },
       windSpeed(){
-        // if(this.weatherData.currentConditions){
-        //   let speed = this.weatherData.currentConditions.Wind.Speed.Metric.Value;
-        //   return speed
-        // }
-        // return "N/A"
-        return 12
+        if(this.weatherData !== null){
+          let speed = Math.round(this.weatherData.current.wind_speed);
+          return speed
+        }
+        return "N/A"
       },
       humidity(){
-        // if(this.weatherData.currentConditions){
-        //   let level = this.weatherData.currentConditions.RelativeHumidity;
-        //   return level
-        // }
-        // return "N/A"
-        return 30
+        if(this.weatherData !== null){
+          let humidLevel = this.weatherData.current.humidity;
+          return humidLevel
+        }
+        return "N/A"
       },
       highestAndLowestTemp(){
-        // if(this.weatherData.dailyForecasts){
-        //   let highestTemp = Math.floor(this.weatherData.dailyForecasts.Temperature.Maximum.Value);
-        //   let lowestTemp = Math.floor(this.weatherData.dailyForecasts.Temperature.Minimum.Value);
-        //   return {highestTemp, lowestTemp}
-        // }
-        // return "N/A"
-        return {highestTemp: 15, lowestTemp: 1}
+        if(this.weatherData !== null){
+          let highestTemp = Math.floor(this.weatherData.daily[0].temp.max);
+          let lowestTemp = Math.floor(this.weatherData.daily[0].temp.min);
+          return {highestTemp, lowestTemp}
+        }
+        return "N/A"
       }       
     },
     created: function() {

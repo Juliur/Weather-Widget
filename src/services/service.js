@@ -1,27 +1,17 @@
 import axios from "axios";
-import {CURRENT_CONDITIONS, DAILY_FORECAST} from "../constants";
+import {API_URL} from "../constants";
 
-const currentConditions= axios.create({
-  baseURL: CURRENT_CONDITIONS,
+const apiRequest = axios.create({
+  baseURL: API_URL,
   headers: { 
       Accept: "application/json",
       "Content-Type": "application/json"
     },
   });
 
-const dailyForecast = axios.create({
-  baseURL: DAILY_FORECAST,
-  headers: { 
-    Accept: "application/json",
-    "Content-Type": "application/json"
-  },
-});
 
 export default {
-  getCurrentConditions() { // function will be used in store.js 
-    return currentConditions.get();
+  getForecastData() { // function will be used in store.js 
+    return apiRequest.get();
   },
-  getDailyForecast(){
-    return dailyForecast.get();
-  }
 };
