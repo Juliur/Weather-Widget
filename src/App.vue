@@ -8,7 +8,7 @@
               <CurrentConditions />
             </div>
             <div class="col-12">
-              <FourDaysForecast />
+              <FiveDaysForecast />
             </div>
           </div>
         </div>
@@ -19,13 +19,13 @@
 
 <script>
   import CurrentConditions from "./components/CurrentConditions.vue";
-  import FourDaysForecast from "./components/FourDaysForecast.vue"
+  import FiveDaysForecast from "./components/FiveDaysForecast.vue"
 
 export default {
   name: 'App',
   components: {
     CurrentConditions,
-    FourDaysForecast,
+    FiveDaysForecast,
   }
 }
 </script>

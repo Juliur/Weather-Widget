@@ -9,11 +9,11 @@
             <div class="daily-forecast">
               <span>
                 <i class="fa fa-long-arrow-up" aria-hidden="true"></i> 
-                {{weatherCache.daily[0]["temp"]["max"]}}&#8451;
+                {{Math.round(weatherCache.daily[0]["temp"]["max"])}}&#8451;
               </span>
               <span>
                 <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                 {{weatherCache.daily[0]["temp"]["min"]}} &#8451;
+                 {{Math.round(weatherCache.daily[0]["temp"]["min"])}} &#8451;
               </span>
             </div>
           </div> 
@@ -73,8 +73,8 @@
       },
 
       getWeatherClass(){
-        if(this.$store.state.weatherCache === null) return "no-icon" ;
-        let weatherIcon = this.$store.state.weatherCache.current.weather[0]["icon"];
+        if(this.weatherCache === null) return "no-icon" ;
+        let weatherIcon = this.weatherCache.current.weather[0]["icon"];
         let weatherIconMap = {
           "01d" : "icon-sunny",
           "02d" : "icon-cloudy-sun",
