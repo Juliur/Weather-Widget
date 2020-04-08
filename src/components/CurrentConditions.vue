@@ -77,11 +77,11 @@
         let weatherIcon = this.$store.state.weatherCache.current.weather[0]["icon"];
         let weatherIconMap = {
           "01d" : "icon-sunny",
-          "02d" : "icon-partly-cloudy",
+          "02d" : "icon-cloudy-sun",
           "03d" : "icon-cloudy",
           "04d" : "icon-cloudy",
           "09d" : "icon-showers",
-          "10d" : "icon-cloudy-showers",
+          "10d" : "icon-showers-sun",
           "11d" : "icon-storm",
           "13d" : "icon-snow",
           "50d" : "icon-fog",

@@ -53,23 +53,52 @@ body{
     margin-left: 20px;
     
 }
+
 .icon-big{
     width: 180px;
     height: 180px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .icon-small{
     width: 50px;
     height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 .icon-sunny{
-    background-image: url('./weather-vector-icons/sunny.png');
-    background-size: contain;
-   
+    background-image: url('./weather-vector-icons/sunny.png'); 
 }
-
-.icon-partly-cloudy{
+.icon-cloudy-sun{
     background-image: url('./weather-vector-icons/partly-cloudy.png');
-    background-size: contain;
+}  
+.icon-cloudy{
+    background-image: url('./weather-vector-icons/cloudy.png');
+}
+.icon-showers{
+    background-image: url('./weather-vector-icons/showers.png');
+}
+.icon-showers-sun{
+    background-image: url('./weather-vector-icons//showers-sun.png')
+}  
+.icon-storm{
+    background-image: url('./weather-vector-icons/storm.png');
+}
+.icon-snow{
+    background-image: url('./weather-vector-icons/snow.png');
+}
+.icon-fog{
+    background-image: url('./weather-vector-icons/fog.png');
+}
+.icon-moon{
+    background-image: url('./weather-vector-icons/moon.png');
+}
+.icon-cloudy-moon{
+    background-image: url('./weather-vector-icons/clody-moon.png');
+}
+.icon-showers-moon{
+    background-image: url('./weather-vector-icons/showers-moon.png');
 }
 .humidity-info i{
     margin-right: 5px;
