@@ -11,7 +11,7 @@ const apiRequest = axios.create({
 
 
 export default {
-  getForecastData() { // function will be used in store.js 
+  getForecastData() {
     return apiRequest.get();
   },
 };

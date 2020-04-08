@@ -5,10 +5,10 @@
         <div class="col-lg-6 offset-lg-3 col-sm-8 offset-sm-2 col-12">
           <div class="row no-gutters">
             <div class="col-12">
-              <currentConditions />
+              <CurrentConditions />
             </div>
             <div class="col-12">
-              <fourDaysForecast />
+              <FourDaysForecast />
             </div>
           </div>
         </div>
@@ -18,14 +18,14 @@
 </template>
 
 <script>
-  import currentConditions from "./components/currentConditions.vue";
-  import fourDaysForecast from "./components/fourDaysForecast.vue"
+  import CurrentConditions from "./components/CurrentConditions.vue";
+  import FourDaysForecast from "./components/FourDaysForecast.vue"
 
 export default {
   name: 'App',
   components: {
-    currentConditions,
-    fourDaysForecast,
+    CurrentConditions,
+    FourDaysForecast,
   }
 }
 </script>
