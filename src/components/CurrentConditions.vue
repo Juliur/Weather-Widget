@@ -76,38 +76,25 @@
         if(this.$store.state.weatherCache === null) return "no-icon" ;
         let weatherIcon = this.$store.state.weatherCache.current.weather[0]["icon"];
         let weatherIconMap = {
-          "01d": "icon-sunny",
-          }
-            // 2: "icon-partly-cloudy",
-            // 3: "icon-partly-cloudy",
-            // 4: "icon-partly-cloudy",
-            // 5: "icon-partly-cloudy",
-            // 6: "icon-partly-cloudy",
-            // 7: "icon-cloudy",
-            // 8: "icon-cloudy",
-            // 11: "icon-fog",
-            // 12: "icon-showers",
-            // 13: "icon-cloudy-showers",
-            // 14: "icon-cloudy-showers",
-            // 15: "icon-storm",
-            // 16: "icon-storm",
-            // 17: "icon-storm",
-            // 18: "icon-showers",
-            // 29: "icon-rain-snow",
-            // 32: "icon-windy",
-            // 33: "icon-moon",
-            // 34: "icon-moon",
-            // 35: "icon-cloudy-moon",
-            // 36: "icon-cloudy-moon",
-            // 37: "icon-cloudy-moon",
-            // 38: "icon-cloudy-moon",
-            // 39: "icon-showers-moon",
-            // 40: "icon-showers-moon",
-            // 41: "icon-showers-moon",
-            // 42: "icon-showers-moon",
-            // 43: "icon-showers-moon",
-            // 44: "icon-showers-moon",
-    
+          "01d" : "icon-sunny",
+          "02d" : "icon-partly-cloudy",
+          "03d" : "icon-cloudy",
+          "04d" : "icon-cloudy",
+          "09d" : "icon-showers",
+          "10d" : "icon-cloudy-showers",
+          "11d" : "icon-storm",
+          "13d" : "icon-snow",
+          "50d" : "icon-fog",
+          "01n" : "icon-moon",
+          "02n" : "icon-cloudy-moon",
+          "03n" : "icon-cloudy",
+          "04n" : "icon-cloudy",
+          "09n" : "icon-showers",
+          "10n" : "icon-showers-moon",
+          "11n" : "icon-storm",
+          "13n" : "icon-snow",
+          "50n" : "icon-fog",
+        }
         let result = weatherIconMap[weatherIcon];
         if(!weatherIconMap[weatherIcon]){
           result = "no-icon"
@@ -115,43 +102,5 @@
         return result
       },
     }
-
-
-    //   
-    //   
-    //   
-    //   temperature(){
-    //     if(this.weatherData !== null){
-    //       let temp = Math.round(this.weatherData.current.temp);
-    //       return temp
-    //     }
-    //     return "N/A"
-    //   },
-    //   windSpeed(){
-    //     if(this.weatherData !== null){
-    //       let speed = Math.round(this.weatherData.current.wind_speed);
-    //       return speed
-    //     }
-    //     return "N/A"
-    //   },
-    //   humidity(){
-    //     if(this.weatherData !== null){
-    //       let humidLevel = this.weatherData.current.humidity;
-    //       return humidLevel
-    //     }
-    //     return "N/A"
-    //   },
-    //   highestAndLowestTemp(){
-    //     if(this.weatherData !== null){
-    //       let highestTemp = Math.floor(this.weatherData.daily[0].temp.max);
-    //       let lowestTemp = Math.floor(this.weatherData.daily[0].temp.min);
-    //       return {highestTemp, lowestTemp}
-    //     }
-    //     return "N/A"
-    //   }       
-    // },
-    // created: function() {
-    //   this.$store.dispatch("updateWeather"); // dispatch "updateWeather" when component is created
-    // }
   }
 </script>
