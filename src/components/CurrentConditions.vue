@@ -42,6 +42,9 @@
               <span class="degree-symbol font-weight-bold">&#176;</span>
             </div>
           </div>
+          <router-link to="/settings">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+          </router-link>
         </div>
       </div>
   </div>
