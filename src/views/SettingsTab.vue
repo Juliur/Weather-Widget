@@ -64,6 +64,7 @@ import axios from 'axios';
 					.then((response)=>{
 						console.log(response.data)
 					})
+					.catch(error => console.log("City not found! ", error.response.statusText));
 			},
 		},
 	}
