@@ -17,8 +17,20 @@
 							<i class="fa fa-search" aria-hidden="true"></i>
 						</button>
 
-						<div class="city-variants" v-for="city in matchesCities" :key="city.id"> 
-							<p>{{city.name}}</p> <button 	@click.prevent="chooseCity(city)">Choose</button>
+						<div class="matches-city-list" v-if="!chosenCity">
+							<ul 	
+								class="city-variants" 
+								v-for="city in matchesCities" 
+								:key="city.id"> 
+								<li>
+									{{city.name}}
+									<button @click.prevent="chooseCity(city)">Choose</button>
+								</li>
+							</ul>
+						</div>
+						<div v-else-if="chosenCity"
+								class="chosen-city">
+							{{ getChosenCity() }}
 						</div>
 					</div>
 				</div>
@@ -36,7 +48,7 @@ import axios from 'axios';
 			return{
 				enteredCity: "",
 				matchesCities: [],
-				chosenCity: [],
+				chosenCity: null,
 				cityCoordinates: {
 					lat: null,
 					lon: null,
@@ -73,13 +85,18 @@ import axios from 'axios';
 			},
 
 			chooseCity(city){
-				this.chosenCity.push(city);
+				this.chosenCity= city;
 				this.saveChosenCity();
 			},
 
 			saveChosenCity(){
 				const parsed = JSON.stringify(this.chosenCity);
 				localStorage.setItem('chosenCity', parsed);
+			},
+
+			getChosenCity(){
+				let result = JSON.parse(localStorage.getItem('chosenCity'));
+				return result.name
 			}
 		},
 	}
