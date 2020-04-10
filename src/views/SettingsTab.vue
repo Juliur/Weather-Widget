@@ -18,7 +18,7 @@
 						</button>
 
 						<div class="city-variants" v-for="city in matchesCities" :key="city.id"> 
-							<p>{{city.name}}</p>
+							<p>{{city.name}}</p> <button 	@click.prevent="chooseCity(city)">Choose</button>
 						</div>
 					</div>
 				</div>
@@ -36,14 +36,25 @@ import axios from 'axios';
 			return{
 				enteredCity: "",
 				matchesCities: [],
+				chosenCity: [],
 				cityCoordinates: {
 					lat: null,
 					lon: null,
 				}
 			}
 		},
+		mounted() {
+			if (localStorage.getItem('chosenCity')) {
+				try {
+					this.chosenCity = JSON.parse(localStorage.getItem('chosenCity'));
+				}catch(error) {
+					localStorage.removeItem('chosenCity');
+				}
+			}
+		},
 		methods:{
 			async getCitiesArray(){
+				if(!this.enteredCity) return;
 				try{
 					await axios.get("/city.list.min.json")
 					.then((response)=>{
@@ -59,9 +70,20 @@ import axios from 'axios';
 				} catch(error) {
 						console.log(error)
 					} 
+			},
+
+			chooseCity(city){
+				this.chosenCity.push(city);
+				this.saveChosenCity();
+			},
+
+			saveChosenCity(){
+				const parsed = JSON.stringify(this.chosenCity);
+				localStorage.setItem('chosenCity', parsed);
 			}
-		}
+		},
 	}
+
 						// for(let city of response.data){
 						// 	if(city.name.toLowerCase() === this.enteredCity.toLowerCase()){
 						// 		console.log(this.enteredCity)
