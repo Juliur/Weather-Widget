@@ -10,12 +10,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: SettingsTab
     },
     {
-        path: '/settings',
-        name: 'settings',
-        component: SettingsTab
+        path: '/weather',
+        name: 'weather',
+        component: Home
       }
   ]
 })
