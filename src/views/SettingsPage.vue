@@ -17,21 +17,25 @@
 							<i class="fa fa-search" aria-hidden="true"></i>
 						</button>
 
-						<div class="matches-city-list" v-if="!chosenCity">
+						<div v-show="chosenCity"
+							class="chosen-city">
+								<div>
+									{{getChosenCity().city }} / {{getChosenCity().country }}
+								</div>
+								<button>Save changes</button>
+						</div>
+						<div class="matches-city-list">
 							<ul 	
 								class="city-variants" 
 								v-for="city in matchesCities" 
 								:key="city.id"> 
 								<li>
-									{{city.name}}
+									{{city.name}} / {{city.country}}
 									<button @click.prevent="chooseCity(city)">Choose</button>
 								</li>
 							</ul>
 						</div>
-						<div v-else-if="chosenCity"
-								class="chosen-city">
-							{{ getChosenCity() }}
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -43,16 +47,12 @@
 import axios from 'axios';
 
 	export default {
-		name: "SettingsTab",
+		name: "SettingsPage",
 		data(){
 			return{
 				enteredCity: "",
 				matchesCities: [],
 				chosenCity: null,
-				cityCoordinates: {
-					lat: null,
-					lon: null,
-				}
 			}
 		},
 		mounted() {
@@ -96,7 +96,16 @@ import axios from 'axios';
 
 			getChosenCity(){
 				let result = JSON.parse(localStorage.getItem('chosenCity'));
-				return result.name
+				if(result === null){
+					return {
+						city: "No city selected",
+						country: ""
+					}
+				}
+				return {
+					city:result.name, 
+					country: result.country
+				}
 			}
 		},
 	}
@@ -122,8 +131,5 @@ import axios from 'axios';
 					// 		}
 					// 	})
 					// })
-					// .then((response)=>{
-					// 	console.log(response.data)
-					// })
-					// .catch(error => console.log("City not found! ", error.response.statusText));
+	
 </script>
