@@ -42,7 +42,7 @@
               <span class="degree-symbol font-weight-bold">&#176;</span>
             </div>
           </div>
-          <router-link to="/settings">
+          <router-link to="/">
             <i class="fa fa-cog" aria-hidden="true"></i>
           </router-link>
         </div>
@@ -52,12 +52,16 @@
 
 <script> 
   import moment from 'moment';
-  import store from '@/store.js'
+  import store from '@/store.js';
   export default {
     name: "CurrentConditions",
 
     mounted(){
-      store.dispatch("updateWeather");
+      let data = JSON.parse(localStorage.getItem('chosenCity'));
+      let lon = data.coord.lon;
+      let lat = data.coord.lat;
+      console.log(lon, lat)
+      store.dispatch("updateWeather", {lon, lat})
     },
 
     filters:{
@@ -70,7 +74,6 @@
 
     computed:{
       weatherCache:() => store.getters['getWeatherCache'],
-
 
       currentDay(){
       let day = moment().format('dddd');
