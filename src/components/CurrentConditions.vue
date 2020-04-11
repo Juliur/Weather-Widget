@@ -32,7 +32,7 @@
             <div class="mx-auto icon-big"
                 :class="getWeatherClass"
             ></div>
-            <p class="weather-desc text-uppercase text-center mt-3">
+            <p class="weather-desc text-uppercase text-center mt-2 mb-0">
               {{ weatherCache.current.weather[0]["description"]}}
             </p>
           </div>
@@ -42,7 +42,7 @@
               <span class="degree-symbol font-weight-bold">&#176;</span>
             </div>
           </div>
-          <router-link to="/">
+          <router-link to="/" class="settings-link">
             <i class="fa fa-cog" aria-hidden="true"></i>
           </router-link>
         </div>
