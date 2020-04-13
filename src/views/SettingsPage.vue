@@ -31,7 +31,7 @@
 			<div v-if="chosenLocation !== null"
 					class="footer">
 					<p>
-						Selected location: <span> {{getChosenLocation().city }} / {{getChosenLocation().country }} </span>
+						Selected location: <span> {{ showChosenLocation().city }} / {{  showChosenLocation().country }} </span>
 					</p>
 					<div class="d-flex justify-content-center">
 						<div class="show-weather-btn d-flex justify-content-center align-items-center">
@@ -78,13 +78,13 @@
 						this.matchesCities = citiesArray.filter(
 							city => city.name.toLowerCase().startsWith(this.enteredLocation.toLowerCase())
 						);
-						console.log(this.matchesCities)
 						if(this.matchesCities.length === 0) {
 							throw new Error("Array is empty!")
 						}
 					})
 				} catch(error) {
 						console.log(error)
+						return "Location not found"
 					} 
 			},
 
@@ -97,25 +97,12 @@
 				const parsed = JSON.stringify(this.chosenLocation);
 				localStorage.setItem('chosenLocation', parsed);
 			},
-
-			getChosenLocation(){
+			showChosenLocation(){
 				let result = JSON.parse(localStorage.getItem('chosenLocation'));
-				if(result === null){
-					return {
-						city: "No location",
-						country: ""
-					}
-				}
-				return {
-					city:result.name, 
-					country: result.country
-				}
+				let city = result.name;
+				let country = result.country;
+				return {city, country}
 			}
 		},
-		// computed:{
-		// 	showingMatchesCityList(){
-		// 		return true
-		// 	}
-		// }
 	}
 </script>

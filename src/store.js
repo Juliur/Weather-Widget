@@ -3,16 +3,20 @@ import Vuex from "vuex";
 import axios from "axios";
 import {API_URL, API_KEY} from "./constants";
 
-Vue.use(Vuex); // tell Vue to action with Vuex
+Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
 		weatherCache: null,
+		chosenLocation: null,
 	},
 
 	mutations:{
 		setWeatherCache(state, payload){
 			state.weatherCache = payload;
+		},
+		setChosenLocation(state, payload){
+			state.chosenLocation = payload;
 		}
 	},
 
@@ -37,12 +41,20 @@ export default new Vuex.Store({
 				console.log("City not found! ", error.response.statusText);
 			}
 		},
+		chosenLocation({commit}){
+			let result = JSON.parse(localStorage.getItem('chosenLocation'));
+			let city = result.name; 
+			commit('setChosenLocation', city)
+		}
 	},
 	getters:{
 		getWeatherCache(state) {
 			return state.weatherCache
+		},
+		getChosenLocation(state){
+			return state.chosenLocation
 		}
-	}
+	},
 })
 
 

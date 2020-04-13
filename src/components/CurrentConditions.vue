@@ -3,7 +3,7 @@
       <div class="container-fluid p-0">
         <div class="row d-flex align-items-center">
           <div class="col-lg-8 col-sm-6">
-            <p class="city-name font-weight-bold text-uppercase mb-0">{{ weatherCache.timezone | cityName }}</p>
+            <p class="city-name font-weight-bold text-uppercase mb-0">{{ chosenLocation }}</p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <div class="text-right daily-forecast">
@@ -60,20 +60,13 @@
       let data = JSON.parse(localStorage.getItem('chosenLocation'));
       let lon = data.coord.lon;
       let lat = data.coord.lat;
-      console.log(lon, lat)
-      store.dispatch("updateWeather", {lon, lat})
-    },
-
-    filters:{
-      cityName(timezone){
-        let slashIndex = timezone.indexOf('/');
-        let resultName = timezone.slice(slashIndex + 1);
-        return resultName
-      }
+      store.dispatch("updateWeather", {lon, lat});
+      store.dispatch("chosenLocation");
     },
 
     computed:{
       weatherCache:() => store.getters['getWeatherCache'],
+      chosenLocation: () => store.getters['getChosenLocation'],
 
       currentDay(){
       let day = moment().format('dddd');
