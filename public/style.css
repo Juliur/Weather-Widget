@@ -1,61 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;500;700&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css');
 body{
-    background-image: url('./kisspng-gradient-desktop-wallpaper-color-background-5ab88c172773b8.5174360515220439271616.png');
+    /* background-image: url('./kisspng-gradient-desktop-wallpaper-color-background-5ab88c172773b8.5174360515220439271616.png'); */
     font-family: 'Barlow', sans-serif;
     color: white;
     height: 100vh;
-    overflow-y: hidden; 
+    background: #160424; 
+    background: -webkit-linear-gradient(to bottom,  #0e0118, #22133f);
+    background: linear-gradient(to bottom,  #0e0118, #22133f);
 }
 #app{
     height: inherit;
 }
-
+#weather-widget{
+    width: 100%;
+}
 #current-weather, #weather-forecast{
     background-color: rgba(240, 248, 255, .5);
-    border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 2, 3, 0.3);
     padding: 15px;
+    width: 100%;
+    margin-top: 20px;
 }
 
-#current-weather{
-    width: 100%;
-}
-#current-weather, #weather-forecast, #settings-page{
-    margin-top: 20px;
-    width: 100%;
-}
 .city-name{
     font-size: 2.5rem;
 }
-.temp-wrap{
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
 .current-temp{
-    position: absolute;
-    font-size: 4.5rem;
+    font-size: 6rem;
 }
 .degree-symbol{
-    position: absolute;
-    right: 70px;
-    top: 15px;
-    font-size: 2.5rem;
+    font-size: 3rem;
 }
 .current-day, .weather-desc, .daily-forecast{
     font-size: 1.2rem;
-}
-.daily-forecast{
-    margin-top: 15px;
-    text-align: end;
 }
 .daily-forecast span:last-child{
     margin-left: 20px;
 }
 .icon-big{
-    width: 130px;
-    height: 130px;
+    width: 170px;
+    height: 170px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -112,57 +97,52 @@ body{
     margin-right: 5px;
 }
 
-.col-xs-5ths,
-.col-sm-5ths,
-.col-md-5ths,
-.col-lg-5ths {
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
+p.temp{
+    font-size: .8rem;
+}
+#settings-page{
+    height: 500px;
+    width: 100%;
 }
 
-.col-xs-5ths {
-    width: 20%;
-    float: left;
-}
-
-.search-btn, .search-input{
+.header{
+    width: 100%;
     background-color: rgba(240, 248, 255, .5);
-    border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 2, 3, 0.3);
-    border: 0;
     height: 50px;
-    color: white;
-    padding: 10px;
 }
-
-.search-input{
-    width: 75%;
+.search-input, .search-btn{
+    height: 100%;
+    padding: .75rem 1.25rem;
+    border:0;
+    background-color: transparent;
     outline: none;
+}
+.search-input{
+    width: 80%;
     font-size: 1.2rem;
-    vertical-align: bottom;
+    color: white;
 }
 ::-webkit-input-placeholder{ 
-    color: white;
+    color: rgba(255, 255, 255, 0.794);
     font-size: 1.2rem;
  }
 ::-moz-placeholder{ 
-    color: white; 
+    color: rgba(255, 255, 255, 0.794);
     font-size: 1.2rem;
 } 
 :-moz-placeholder{ 
-    color: white;
+    color: rgba(255, 255, 255, 0.794);
     font-size: 1.2rem;
 } 
 :-ms-input-placeholder{ 
-    color: white; 
+    color: rgba(255, 255, 255, 0.794);
     font-size: 1.2rem;
 }
 
 .search-btn{
-    width: 20%;
-    margin-left: 10px;
+    flex-grow: 1;
+    color: white;
 }
 .search-btn:focus{
     outline: none;
@@ -170,19 +150,57 @@ body{
 .search-btn:active{
     background-color: rgba(140, 161, 180, 0.5);
 }
-.setting-page{
-    
+.footer{
+    padding: 1.25rem 0; 
+}
+
+.show-weather-btn{
+    text-decoration: none;
+    height: 50px;
+    width: 200px;
+    display: block;
+    background-color: rgba(240, 248, 255, .5);
+    padding: 10px;
+    box-shadow: 0 3px 10px rgba(0, 2, 3, 0.3);
+}
+.show-weather-btn>a{
+    color: white;
+}
+.show-weather-btn>a:hover{
+    text-decoration: none;
+    color: white;
 }
 .matches-city-list{
     overflow-y: scroll;
-    height: 40%;
+    max-height: 40vh; 
+    margin-top: 20px;
 }
 .list-group-item-custom{
-    background-color: transparent;
+    background-color:  rgba(240, 248, 255, .2);
     color: white;
 }
+.list-group-item-custom:hover,
+.list-group-item-custom:active,
+.list-group-item-custom:focus{
+    color: white;
+    background-color: rgba(240, 248, 255, .2);
+    border-color: transparent; 
+    box-shadow: 0 3px 10px rgba(0, 2, 3, 0.3);
+    outline: none;
+}
+::-webkit-scrollbar {
+    width: 15px;
+}
+ 
+::-webkit-scrollbar-track {
+    background-color: rgba(150, 157, 163, 0.2);
 
-
+}
+ 
+::-webkit-scrollbar-thumb {
+    background-color: rgba(240, 248, 255, .5);
+    box-shadow: 0 3px 10px rgba(0, 2, 3, 0.3);
+}
 @media (min-width: 1200px) {
     .col-lg-5ths {
         width: 20%;

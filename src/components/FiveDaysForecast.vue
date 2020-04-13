@@ -1,8 +1,8 @@
 <template>
 	<div id="weather-forecast" class="container-fluid" v-if="weatherCache !== null">
 		<div class="row">
-			<div class="col-lg-5ths col-md-5ths text-center"
-					v-for="day in weatherCache.daily.slice(1,6)" :key="day.dt">
+			<div class="col-lg-2 text-center"
+					v-for="day in weatherCache.daily.slice(1,7)" :key="day.dt">
 					<p class="day">{{ day.dt | getDayFromDT }}</p>
 					<p class="date">{{ day.dt | getDateFromDT }}</p>
 					<div class="icon-small mx-auto mb-2"

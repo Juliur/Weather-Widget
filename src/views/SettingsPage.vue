@@ -1,40 +1,50 @@
 <template>
 	<div id="settings-page">
 		<div class="col-12">
-			<input 
-				v-model="enteredCity"
-				@keyup.enter="getCitiesArray"
-				class="search-input"
-				type="text" 
-				placeholder="Enter your city..."/>
+			<div class="header d-flex">
+				<input 
+					v-model="enteredLocation"
+					@keyup.enter="getCitiesArray"
+					class="search-input"
+					type="text" 
+					placeholder="Enter location"/>
 
-			<button
-					type="submit"
-					@click.prevent="getCitiesArray"
-					class="search-btn text-uppercase font-weight-bold">
-				<i class="fa fa-search" aria-hidden="true"></i>
-			</button>
-
-			<div v-show="chosenCity"
-				class="chosen-city">
-					<div>
-						{{getChosenCity().city }} / {{getChosenCity().country }}
-					</div>
-					<button>Save changes</button>
+				<button
+						type="submit"
+						@click.prevent="getCitiesArray"
+						class="search-btn text-uppercase font-weight-bold text-right">
+					<i class="fa fa-search" aria-hidden="true"></i>
+				</button>
 			</div>
 
-			<div class="matches-city-list list-group list-group-flush list-unstyled" v-if="matchesCities.length>0">
+			<div class="matches-city-list list-group list-group-flush list-unstyled" 
+						v-if="matchesCities.length>0">
 				<a 
 					href="#" 
 					class="list-group-item list-group-item-action list-group-item-custom"
 					v-for="city in matchesCities" 
 					:key="city.id"
-					@click.prevent="chooseCity(city)">
+					@click.prevent="chooseLocation(city)">
 					{{city.name}} / {{city.country}}
 				</a>
 			</div>
-		</div>
-	</div>	
+			<div v-if="chosenLocation !== null"
+					class="footer">
+					<p>
+						Selected location: <span> {{getChosenLocation().city }} / {{getChosenLocation().country }} </span>
+					</p>
+					<div class="d-flex justify-content-center">
+						<div class="show-weather-btn d-flex justify-content-center align-items-center">
+							<router-link to="/weather" class="text-uppercase font-weight-bold">
+								Show weather
+							</router-link>
+						</div>
+					</div>		
+				</div>	
+			</div>
+			
+	</div>
+
 </template>
 
 <script>
@@ -44,29 +54,29 @@
 		name: "SettingsPage",
 		data(){
 			return{
-				enteredCity: "",
+				enteredLocation: "",
 				matchesCities: [],
-				chosenCity: null,
+				chosenLocation: null,
 			}
 		},
 		mounted() {
-			if (localStorage.getItem('chosenCity')) {
+			if (localStorage.getItem('chosenLocation')) {
 				try {
-					this.chosenCity = JSON.parse(localStorage.getItem('chosenCity'));
+					this.chosenLocation = JSON.parse(localStorage.getItem('chosenLocation'));
 				}catch(error) {
-					localStorage.removeItem('chosenCity');
+					localStorage.removeItem('chosenLocation');
 				}
 			}
 		},
 		methods:{
 			async getCitiesArray(){
-				if(!this.enteredCity) return;
+				if(!this.enteredLocation) return;
 				try{
 					await axios.get("/city.list.min.json")
 					.then((response)=>{
 						let citiesArray = response.data;
 						this.matchesCities = citiesArray.filter(
-							city => city.name.toLowerCase().startsWith(this.enteredCity.toLowerCase())
+							city => city.name.toLowerCase().startsWith(this.enteredLocation.toLowerCase())
 						);
 						console.log(this.matchesCities)
 						if(this.matchesCities.length === 0) {
@@ -78,21 +88,21 @@
 					} 
 			},
 
-			chooseCity(city){
-				this.chosenCity= city;
-				this.saveChosenCity();
+			chooseLocation(city){
+				this.chosenLocation = city;
+				this.saveChosenLocation();
 			},
 
-			saveChosenCity(){
-				const parsed = JSON.stringify(this.chosenCity);
-				localStorage.setItem('chosenCity', parsed);
+			saveChosenLocation(){
+				const parsed = JSON.stringify(this.chosenLocation);
+				localStorage.setItem('chosenLocation', parsed);
 			},
 
-			getChosenCity(){
-				let result = JSON.parse(localStorage.getItem('chosenCity'));
+			getChosenLocation(){
+				let result = JSON.parse(localStorage.getItem('chosenLocation'));
 				if(result === null){
 					return {
-						city: "No city selected",
+						city: "No location",
 						country: ""
 					}
 				}
@@ -102,5 +112,10 @@
 				}
 			}
 		},
+		// computed:{
+		// 	showingMatchesCityList(){
+		// 		return true
+		// 	}
+		// }
 	}
 </script>

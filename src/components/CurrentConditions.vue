@@ -1,12 +1,12 @@
 <template>
     <div id="current-weather" v-if="weatherCache !== null">
       <div class="container-fluid p-0">
-        <div class="row">
+        <div class="row d-flex align-items-center">
           <div class="col-lg-8 col-sm-6">
             <p class="city-name font-weight-bold text-uppercase mb-0">{{ weatherCache.timezone | cityName }}</p>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <div class="daily-forecast">
+            <div class="text-right daily-forecast">
               <span>
                 <i class="fa fa-long-arrow-up" aria-hidden="true"></i> 
                 {{Math.round(weatherCache.daily[0]["temp"]["max"])}}&#8451;
@@ -37,9 +37,9 @@
             </p>
           </div>
           <div class="col-md-4 col-4">
-            <div class="temp-wrap">
-              <span class="current-temp">{{ Math.round(weatherCache.current.temp) }}</span>
-              <span class="degree-symbol font-weight-bold">&#176;</span>
+            <div class="temp-wrap d-inline-flex">
+              <p class="current-temp">{{ Math.round(weatherCache.current.temp) }}</p>
+              <p class="degree-symbol font-weight-bold">&#176;</p>
             </div>
           </div>
           <router-link to="/" class="settings-link">
@@ -57,7 +57,7 @@
     name: "CurrentConditions",
 
     mounted(){
-      let data = JSON.parse(localStorage.getItem('chosenCity'));
+      let data = JSON.parse(localStorage.getItem('chosenLocation'));
       let lon = data.coord.lon;
       let lat = data.coord.lat;
       console.log(lon, lat)
