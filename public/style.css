@@ -153,6 +153,14 @@ p.temp{
 .footer{
     padding: 1.25rem 0; 
 }
+.custom-select{
+    background: rgba(140, 161, 180, 0.5) url(./angle-arrow-down.png) no-repeat right 10px center/10% 15px;
+    border:0;
+    border-radius: 0;
+    color: white;
+    padding: .5rem 1.5rem .5rem .5rem;
+    margin-left: 1rem;
+}
 
 .show-weather-btn{
     text-decoration: none;
