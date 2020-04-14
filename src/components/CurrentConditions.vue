@@ -39,7 +39,7 @@
           <div class="col-md-4 col-4">
             <div class="temp-wrap d-inline-flex">
               <p class="current-temp">{{ Math.round(weatherCache.current.temp) }}</p>
-              <p class="degree-symbol font-weight-bold">&#176;</p>
+              <p class="degree-symbol font-weight-bold">{{ showUnitSymbol }} </p>
             </div>
           </div>
           <router-link to="/" class="settings-link">
@@ -69,6 +69,7 @@
     computed:{
       weatherCache:() => store.getters['getWeatherCache'],
       chosenLocation: () => store.getters['getChosenLocation'],
+      selectedUnit:() => store.getters['getSelectedUnit'],
 
       currentDay(){
       let day = moment().format('dddd');
@@ -78,6 +79,14 @@
       currentDate(){
         let date =  moment().format('L')
         return date
+      },
+
+      showUnitSymbol(){
+        if(this.selectedUnit === "imperial"){
+          return "F"
+        }else if(this.selectedUnit === "metric"){
+          return "&#176;"
+        }else return "K"
       },
 
       getWeatherClass(){

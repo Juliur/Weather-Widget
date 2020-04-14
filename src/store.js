@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-import {API_URL, API_KEY} from "./constants";
+import {API_KEY_WEATHER, API_URL_WEATHER} from "./constants";
 
 Vue.use(Vuex);
 
@@ -29,17 +29,16 @@ export default new Vuex.Store({
 			try {
 				await axios({
 					method: 'get',
-					url: API_URL,
+					url: API_URL_WEATHER,
 					params:{
 						lat: params.lat,
 						lon: params.lon,
 						units: params.unit,
-						appid: API_KEY,
+						appid: API_KEY_WEATHER,
 					}
 				})
 				.then((response)=>{
 					commit('setWeatherCache', response.data);
-					console.log(response)
 				})
 			}catch(error){
 				console.log("City not found! ", error.response.statusText);
@@ -61,6 +60,9 @@ export default new Vuex.Store({
 		},
 		getChosenLocation(state){
 			return state.chosenLocation
+		},
+		getSelectedUnit(state){
+			return state.selectedUnit
 		}
 	},
 })
