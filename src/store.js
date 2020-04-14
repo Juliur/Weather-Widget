@@ -9,6 +9,7 @@ export default new Vuex.Store({
 	state: {
 		weatherCache: null,
 		chosenLocation: null,
+		selectedUnit: null,
 	},
 
 	mutations:{
@@ -17,19 +18,22 @@ export default new Vuex.Store({
 		},
 		setChosenLocation(state, payload){
 			state.chosenLocation = payload;
+		},
+		setSelectedUnit(state, payload){
+			state.selectedUnit = payload;
 		}
 	},
 
 	actions:{
-		async updateWeather({commit}, coord){
+		async updateWeather({commit}, params){
 			try {
 				await axios({
 					method: 'get',
 					url: API_URL,
 					params:{
-						lat: coord.lat,
-						lon: coord.lon,
-						units: "metric",
+						lat: params.lat,
+						lon: params.lon,
+						units: params.unit,
 						appid: API_KEY,
 					}
 				})
@@ -45,7 +49,11 @@ export default new Vuex.Store({
 			let result = JSON.parse(localStorage.getItem('chosenLocation'));
 			let city = result.name; 
 			commit('setChosenLocation', city)
-		}
+		},
+		selectedUnit({commit}){
+			let resultUnit = JSON.parse(localStorage.getItem('selectedUnit'));
+			commit('setSelectedUnit', resultUnit)
+		},
 	},
 	getters:{
 		getWeatherCache(state) {

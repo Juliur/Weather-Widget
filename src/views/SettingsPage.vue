@@ -33,6 +33,18 @@
 					<p>
 						Selected location: <span> {{ showChosenLocation().city }} / {{  showChosenLocation().country }} </span>
 					</p>
+					<div class="form-inline">
+					<label for="selectUnit">Units:</label>
+						<select 
+							v-model="selectedUnit"
+							@change="selectUnit($event)"
+							class="custom-select" 
+							id="selectUnit">
+							<option value="metric">Celsius</option>
+							<option value="default">Kelvin</option>
+							<option value="imperial">Fahrenheit</option>
+						</select>
+					</div>
 					<div class="d-flex justify-content-center">
 						<div class="show-weather-btn d-flex justify-content-center align-items-center">
 							<router-link to="/weather" class="text-uppercase font-weight-bold">
@@ -57,14 +69,19 @@
 				enteredLocation: "",
 				matchesCities: [],
 				chosenLocation: null,
+				selectedUnit: null,
 			}
 		},
 		mounted() {
-			if (localStorage.getItem('chosenLocation')) {
+			if (localStorage.getItem('chosenLocation') && 
+					localStorage.getItem('selectedUnit')
+				) {
 				try {
 					this.chosenLocation = JSON.parse(localStorage.getItem('chosenLocation'));
+					this.selectedUnit = JSON.parse(localStorage.getItem('selectedUnit'));
 				}catch(error) {
 					localStorage.removeItem('chosenLocation');
+					localStorage.removeItem('selectedLocation');
 				}
 			}
 		},
@@ -97,6 +114,17 @@
 				const parsed = JSON.stringify(this.chosenLocation);
 				localStorage.setItem('chosenLocation', parsed);
 			},
+
+			selectUnit(event){
+				this.selectedUnit = event.target.value;
+				this.saveSelectedUnit();
+			},
+
+			saveSelectedUnit(){
+				const parsedInits = JSON.stringify(this.selectedUnit);
+				localStorage.setItem('selectedUnit', parsedInits);
+			},
+
 			showChosenLocation(){
 				let result = JSON.parse(localStorage.getItem('chosenLocation'));
 				let city = result.name;

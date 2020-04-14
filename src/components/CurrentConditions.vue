@@ -57,11 +57,13 @@
     name: "CurrentConditions",
 
     mounted(){
-      let data = JSON.parse(localStorage.getItem('chosenLocation'));
-      let lon = data.coord.lon;
-      let lat = data.coord.lat;
-      store.dispatch("updateWeather", {lon, lat});
+      let locationData = JSON.parse(localStorage.getItem('chosenLocation'));
+      let lon = locationData.coord.lon;
+      let lat = locationData.coord.lat;
+      let unit = JSON.parse(localStorage.getItem('selectedUnit'));
+      store.dispatch("updateWeather", {lon, lat, unit});
       store.dispatch("chosenLocation");
+      store.dispatch("selectedUnit");
     },
 
     computed:{
