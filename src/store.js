@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import moment from 'moment';
 import {API_KEY_WEATHER, API_URL_WEATHER, API_KEY_BACKGROUND, API_URL_BACKGROUND} from "./constants";
 
 Vue.use(Vuex);
@@ -42,10 +43,33 @@ export default new Vuex.Store({
 					}
 				})
 				.then((response)=>{
-					let prevWeatherDesc = response.data.current.weather[0]["description"];
-					let finalWeatherDesc = prevWeatherDesc.replace(" ", "+");
+					let weatherDesc = response.data.current.weather[0]["main"],
+						unixCurrent = response.data.current.dt;
+						// unixSunrise = response.data.current.sunrise,
+						// unixSunset = response.data.current.sunset,
+
+					function dayTime(current){
+						let currentTime = moment.unix(current).format("HH");
+								// futureSunrise = moment.unix(sunrise).format("HH"),
+								// futureSunset = moment.unix(sunset).format("HH");
+						let morning = (currentTime >= 4 && currentTime <= 11),
+								afternoon = (currentTime >= 12 && currentTime <= 16),
+								evening = (currentTime >= 17 && currentTime <= 20),
+								night = (currentTime >= 21 || currentTime <= 3);
+						if(morning){
+							return "morning"
+						}else if(afternoon){
+							return "day"
+						}else if(evening){
+							return "evening"
+						}else if(night){
+							return night
+						}
+					}
+					
+					let imgQuery = weatherDesc.toLowerCase() + "+" + dayTime(unixCurrent);
 					commit('setWeatherCache', response.data);
-					return finalWeatherDesc
+					return imgQuery
 				})
 				.then((response)=>{
 					return axios({
