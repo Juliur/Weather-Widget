@@ -1,62 +1,67 @@
 <template>
-	<div id="settings-page">
-		<div class="col-12">
-			<div class="header d-flex">
-				<input 
-					v-model="enteredLocation"
-					@keyup.enter="getCitiesArray"
-					class="search-input"
-					type="text" 
-					placeholder="Enter location"/>
+	<div class="row align-items-center h-100">
+		<div class="col-lg-8 offset-lg-2 col-sm-10 offset-sm-1 col-12">
+			<div class="row no-gutters">	
+				<div id="settings-page">
+					<div class="col-12">
+						<div class="header d-flex">
+							<input 
+								v-model="enteredLocation"
+								@keyup.enter="getCitiesArray"
+								class="search-input"
+								type="text" 
+								placeholder="Enter location"/>
 
-				<button
-						type="submit"
-						@click.prevent="getCitiesArray"
-						class="search-btn text-uppercase font-weight-bold text-right">
-					<i class="fa fa-search" aria-hidden="true"></i>
-				</button>
-			</div>
-
-			<div class="matches-city-list list-group list-group-flush list-unstyled" 
-						v-if="matchesCities.length>0">
-				<a 
-					href="#" 
-					class="list-group-item list-group-item-action list-group-item-custom"
-					v-for="city in matchesCities" 
-					:key="city.id"
-					@click.prevent="chooseLocation(city)">
-					{{city.name}} / {{city.country}}
-				</a>
-			</div>
-			<div v-if="chosenLocation !== null"
-					class="footer">
-					<p>
-						Selected location: <span> {{ showChosenLocation().city }} / {{  showChosenLocation().country }} </span>
-					</p>
-					<div class="form-inline">
-					<label for="selectUnit">Units:</label>
-						<select 
-							v-model="selectedUnit"
-							@change="selectUnit($event)"
-							class="custom-select" 
-							id="selectUnit">
-							<option value="metric">Celsius</option>
-							<option value="default">Kelvin</option>
-							<option value="imperial">Fahrenheit</option>
-						</select>
-					</div>
-					<div class="d-flex justify-content-center">
-						<div class="show-weather-btn d-flex justify-content-center align-items-center">
-							<router-link to="/weather" class="text-uppercase font-weight-bold">
-								Show weather
-							</router-link>
+							<button
+									type="submit"
+									@click.prevent="getCitiesArray"
+									class="search-btn text-uppercase font-weight-bold text-right">
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</button>
 						</div>
-					</div>		
-				</div>	
-			</div>
-			
-	</div>
 
+						<div class="matches-city-list list-group list-group-flush list-unstyled" 
+									v-if="matchesCities.length>0">
+							<a 
+								href="#" 
+								class="list-group-item list-group-item-action list-group-item-custom"
+								v-for="city in matchesCities" 
+								:key="city.id"
+								@click.prevent="chooseLocation(city)">
+								{{city.name}} / {{city.country}}
+							</a>
+						</div>
+						<div v-if="chosenLocation !== null"
+								class="footer">
+								<p>
+									Selected location: <span> {{ showChosenLocation().city }} / {{  showChosenLocation().country }} </span>
+								</p>
+								<div class="form-inline">
+								<label for="selectUnit">Units:</label>
+									<select 
+										v-model="selectedUnit"
+										@change="selectUnit($event)"
+										class="custom-select" 
+										id="selectUnit">
+										<option value="metric">Celsius</option>
+										<option value="default">Kelvin</option>
+										<option value="imperial">Fahrenheit</option>
+									</select>
+								</div>
+								<div class="d-flex justify-content-center">
+									<div class="show-weather-btn d-flex justify-content-center align-items-center">
+										<router-link to="/weather" class="text-uppercase font-weight-bold">
+											Show weather
+										</router-link>
+									</div>
+								</div>		
+							</div>	
+						</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -86,10 +91,10 @@
 			}
 		},
 		methods:{
-			async getCitiesArray(){
+			getCitiesArray(){
 				if(!this.enteredLocation) return;
 				try{
-					await axios.get("/city.list.min.json")
+					axios.get("/city.list.min.json")
 					.then((response)=>{
 						let citiesArray = response.data;
 						this.matchesCities = citiesArray.filter(

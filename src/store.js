@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-import {API_KEY_WEATHER, API_URL_WEATHER} from "./constants";
+import {API_KEY_WEATHER, API_URL_WEATHER, API_KEY_BACKGROUND, API_URL_BACKGROUND} from "./constants";
 
 Vue.use(Vuex);
 
@@ -10,6 +10,7 @@ export default new Vuex.Store({
 		weatherCache: null,
 		chosenLocation: null,
 		selectedUnit: null,
+		backgroundURL: "",
 	},
 
 	mutations:{
@@ -21,13 +22,16 @@ export default new Vuex.Store({
 		},
 		setSelectedUnit(state, payload){
 			state.selectedUnit = payload;
+		},
+		setBackroundURL(state, payload){
+			state.backgroundURL = payload;
 		}
 	},
 
 	actions:{
-		async updateWeather({commit}, params){
+		updateWeather({commit}, params){
 			try {
-				await axios({
+				axios({
 					method: 'get',
 					url: API_URL_WEATHER,
 					params:{
@@ -38,16 +42,37 @@ export default new Vuex.Store({
 					}
 				})
 				.then((response)=>{
+					let prevWeatherDesc = response.data.current.weather[0]["description"];
+					let finalWeatherDesc = prevWeatherDesc.replace(" ", "+");
 					commit('setWeatherCache', response.data);
+					return finalWeatherDesc
+				})
+				.then((response)=>{
+					return axios({
+						method: 'get',
+						url: API_URL_BACKGROUND,
+						params:{
+							key: API_KEY_BACKGROUND,
+							q: response,
+							image_type: "photo",
+							pretty: "true",
+							per_page: 5
+						}
+					})
+				})
+				.then((response)=>{
+					console.log(response)
+					let imageURL = response.data.hits[0]["largeImageURL"];
+					commit('setBackroundURL', imageURL);
 				})
 			}catch(error){
-				console.log("City not found! ", error.response.statusText);
+				console.log(error);
 			}
 		},
 		chosenLocation({commit}){
 			let result = JSON.parse(localStorage.getItem('chosenLocation'));
 			let city = result.name; 
-			commit('setChosenLocation', city)
+			commit('setChosenLocation', city);
 		},
 		selectedUnit({commit}){
 			let resultUnit = JSON.parse(localStorage.getItem('selectedUnit'));
@@ -63,8 +88,19 @@ export default new Vuex.Store({
 		},
 		getSelectedUnit(state){
 			return state.selectedUnit
+		},
+		getURL(state){
+			return state.backgroundURL
 		}
 	},
+	
+	computed:{
+		weatherDescription(){
+			let prevDesc = this.weatherCache.current.weather[0]["description"];
+			let finalDesc = prevDesc.replace(" ", "+")
+			return finalDesc
+		}
+	}
 })
 
 

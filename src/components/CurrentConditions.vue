@@ -85,7 +85,7 @@
         if(this.selectedUnit === "imperial"){
           return "F"
         }else if(this.selectedUnit === "metric"){
-          return "&#176;"
+          return "°"
         }else return "K"
       },
 
