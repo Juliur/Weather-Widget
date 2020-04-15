@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;500;700&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css');
 body{
-    /* background-image: url('./kisspng-gradient-desktop-wallpaper-color-background-5ab88c172773b8.5174360515220439271616.png'); */
     font-family: 'Barlow', sans-serif;
     color: white;
     height: 100vh;
@@ -11,12 +10,23 @@ body{
 }
 #app{
     height: inherit;
+    background-size: 100%;
 }
+#app::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(192, 210, 231, 0.397);
+}   
 #weather-widget{
     width: 100%;
 }
 #current-weather, #weather-forecast{
-    background-color: rgba(240, 248, 255, .5);
+    background-color: rgba(0, 0, 0, 0.466);
     box-shadow: 0 3px 10px rgba(0, 2, 3, 0.3);
     padding: 15px;
     width: 100%;
