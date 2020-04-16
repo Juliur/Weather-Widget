@@ -1,56 +1,77 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;500;700&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css');
+html{
+    height:100%;
+}
 body{
     font-family: 'Barlow', sans-serif;
     color: white;
-    height: 100vh;
-    background: #160424; 
+    background-image: url(./kisspng-gradient-desktop-wallpaper-color-background-5ab88c172773b8.5174360515220439271616.png);
+    /* background: #160424; 
     background: -webkit-linear-gradient(to bottom,  #0e0118, #22133f);
-    background: linear-gradient(to bottom,  #0e0118, #22133f);
+    background: linear-gradient(to bottom,  #0e0118, #22133f); */
+    overflow-x: hidden;
+    position:relative;
+    height:auto !important;
+    height:100%;
+    min-height:100%;
 }
 #app{
-    height: inherit;
-    background-size: 100%;
+    background-size: cover;
 }
-#app::before{
+#app::after{
     content: "";
     display: block;
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     background-color: rgba(192, 210, 231, 0.397);
-}   
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}    
 #weather-widget{
     width: 100%;
+    z-index: 2;
 }
 #current-weather, #weather-forecast{
     background-color: rgba(0, 0, 0, 0.466);
     box-shadow: 0 3px 10px rgba(0, 2, 3, 0.3);
-    padding: 15px;
+    padding: 15px 30px;
     width: 100%;
     margin-top: 20px;
+    height: max-content;
 }
 
 .city-name{
     font-size: 2.5rem;
 }
+.current-day-info, .weather-desc{
+    font-size: 1.1rem;
+}
+.temp-wrap{
+    position: relative;
+}
+.temp-wrap.current-temp, .temp-wrap .degree-symbol{
+    position: absolute;
+}
 .current-temp{
-    font-size: 6rem;
+    font-size: 5.5rem;
+    transform: translate(25%, -10%);
 }
 .degree-symbol{
-    font-size: 3rem;
+    font-size: 2.5rem;
+    right: 10%;
 }
-.current-day, .weather-desc, .daily-forecast{
-    font-size: 1.2rem;
+.index-name{
+    opacity: .8;
 }
-.daily-forecast span:last-child{
-    margin-left: 20px;
+.index-number{
+    font-size: 1.3rem;
 }
 .icon-big{
-    width: 170px;
-    height: 170px;
+    width: 150px;
+    height: 150px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -65,6 +86,7 @@ body{
 .settings-link{
     color: white;
     opacity: .5;
+    justify-self: flex-end;
 }
 .settings-link:hover{
     color: white;
@@ -227,68 +249,53 @@ p.temp{
 }
 
 @media (max-width: 992px) {
-    .col-md-5ths {
-        width: 20%;
-        float: left;
-    }
+   .current-temp{
+    transform: translate(0, 0);
+   }
+   .degree-symbol{
+    right: 0;
+   }
 }
 
-@media (max-width: 767px) {
-    .col-sm-5ths {
-        width: 20%;
-        float: left;
+@media (max-width: 768px) {
+    .current-day-info, .weather-desc{
+        font-size: 1rem;
     }
     .current-temp{
-        font-size: 6rem;
+        font-size: 5rem;
     }
     .degree-symbol{
-        font-size: 3rem;
-        right: 0;
-    }
-    .city-name{
-        font-size: 3rem;
-    }
-    .current-day, .weather-desc, .daily-forecast {
-        font-size: 1.2rem;
+        font-size: 2.5rem;
     }
     .icon-big{
         width: 120px;
         height: 120px;
     }
+    .index-number{
+        font-size: 1rem;
+    }
+    .index-name{
+        font-size: .8rem;
+    }
 }
 
 @media(max-width: 576px){
+ 
     #current-weather, #weather-forecast{
-        padding: 10px;
+        padding: 10px 10px 15px 10px;
     }
     p{
         font-size: .8rem;
     }
-    .col-sm-5ths {
-        width: 20%;
-        float: left;
-    }
-
     .icon-big{
-        width: 100px;
-        height: 100px;
-    }
-    .city-name{
-        font-size: 2.5rem;
-    }
-    .daily-forecast{
-        text-align: start;
-        margin-top: 0;
+        width: 110px;
+        height: 110px;
     }
     .current-temp{
         font-size: 4rem;
-        margin-left: 15px;
     }
     .degree-symbol{
         font-size: 2rem;
         right: 0;
-    }
-    .current-day, .weather-desc, .daily-forecast {
-        font-size: 1rem;
     }
 }

@@ -1,14 +1,14 @@
 <template>
 	<div id="weather-forecast" class="container-fluid" v-if="weatherCache !== null">
 		<div class="row">
-			<div class="col-lg-2 text-center"
+			<div class="col-lg-2 col-md-4 col-6 text-center"
 					v-for="day in weatherCache.daily.slice(1,7)" :key="day.dt">
-					<p class="day">{{ day.dt | getDayFromDT }}</p>
+					<p class="day mb-0">{{ day.dt | getDayFromDT }}</p>
 					<p class="date">{{ day.dt | getDateFromDT }}</p>
 					<div class="icon-small mx-auto mb-2"
 							:class=" day | getWeatherClass"
 					></div>
-					<p class="temp"> 
+					<p class="font-weight-bold"> 
 						{{Math.round(day.temp.max)}} &#8451; /
 						{{Math.round(day.temp.min)}} &#8451;
 					</p>

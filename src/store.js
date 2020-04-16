@@ -96,7 +96,8 @@ export default new Vuex.Store({
 		chosenLocation({commit}){
 			let result = JSON.parse(localStorage.getItem('chosenLocation'));
 			let city = result.name; 
-			commit('setChosenLocation', city);
+			let country = result.country;
+			commit('setChosenLocation', {city, country});
 		},
 		selectedUnit({commit}){
 			let resultUnit = JSON.parse(localStorage.getItem('selectedUnit'));

@@ -1,52 +1,76 @@
 <template>
-    <div id="current-weather" v-if="weatherCache !== null">
-      <div class="container-fluid p-0">
-        <div class="row d-flex align-items-center">
-          <div class="col-lg-8 col-sm-6">
-            <p class="city-name font-weight-bold text-uppercase mb-0">{{ chosenLocation }}</p>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <div class="text-right daily-forecast">
-              <span>
-                <i class="fa fa-long-arrow-up" aria-hidden="true"></i> 
-                {{Math.round(weatherCache.daily[0]["temp"]["max"])}}&#8451;
-              </span>
-              <span>
-                <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                 {{Math.round(weatherCache.daily[0]["temp"]["min"])}} &#8451;
-              </span>
-            </div>
-          </div> 
+  <div id="current-weather" v-if="weatherCache !== null">
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-10">
+          <p class="city-name font-weight-bold mb-0">{{ chosenLocation.city }}, {{ chosenLocation.country }}</p>
+          <p class="current-day-info mb-0">{{ currentDay }}, {{ currentDate }}</p>
+          
         </div>
-      </div>
-
-      <div class="container-fluid p-0">
-        <div class="row no-gutters">
-          <div class="col-md-3 col-4">
-            <p class="current-day text-uppercase mb-0">{{ currentDay }}</p>
-            <p class="current-date mb-0">{{ currentDate }}</p>
-            <p class="mb-0">Wind {{weatherCache.current.wind_speed}} km/h</p>
-            <p class="humidity-info"><i class="fa fa-tint" aria-hidden="true"></i>{{weatherCache.current.humidity}}%</p>
-          </div>
-          <div class="col-md-5 col-4">
-            <div class="mx-auto icon-big"
-                :class="getWeatherClass"
-            ></div>
-            <p class="weather-desc text-uppercase text-center mt-2 mb-0">
-              {{ weatherCache.current.weather[0]["description"]}}
-            </p>
-          </div>
-          <div class="col-md-4 col-4">
-            <div class="temp-wrap d-inline-flex">
-              <p class="current-temp">{{ Math.round(weatherCache.current.temp) }}</p>
-              <p class="degree-symbol font-weight-bold">{{ showUnitSymbol }} </p>
-            </div>
-          </div>
-          <router-link to="/" class="settings-link">
+        <div class="col-2 text-right">
+          <router-link to="/" class="settings-link ">
             <i class="fa fa-cog" aria-hidden="true"></i>
           </router-link>
         </div>
       </div>
+  
+      <div class="container-fluid p-0">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="row my-4 my-md-0">
+              <div class="col-6 col-lg-7 ">
+                <div class="mx-auto icon-big"
+                    :class="getWeatherClass">
+                </div>
+              </div>
+              <div class="col-6 col-lg-5 d-flex flex-column">
+                <div class="temp-wrap d-inline-flex justify-content-center">
+                  <p class="current-temp mb-0">{{ Math.round(weatherCache.current.temp) }}</p>
+                  <span class="degree-symbol font-weight-bold mb-0">{{ showUnitSymbol }} </span>
+                </div>
+                <p class="weather-desc text-capitalize text-center mb-0 mt-2">
+                  {{ weatherCache.current.weather[0]["description"]}}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6">
+            <div class="row h-100 align-content-between">
+              <div class="col d-flex flex-column">
+                <span class="index-number text-center">
+                  {{Math.round(weatherCache.daily[0]["temp"]["max"])}}&#8451;
+                </span>
+                <p class="index-name text-center mt-auto mb-0">High</p>
+              </div>
+              <div class="col d-flex flex-column">
+                <span class="index-number text-center">{{weatherCache.current.wind_speed}} km/h</span>
+                <p class="index-name text-center mt-auto mb-0">Wind speed</p> 
+              </div>
+              <div class="col d-flex flex-column">
+                <span class="index-number text-center">{{weatherCache.current.humidity}}%</span>
+                <p class="index-name text-center mt-auto mb-0">Humidity</p>
+              </div>
+              <div class="w-100 mt-3"></div>
+              <div class="col d-flex flex-column">
+                <span class="index-number text-center">
+                  {{Math.round(weatherCache.daily[0]["temp"]["min"])}} &#8451;
+                </span>
+                <p class="index-name mt-auto mb-0 text-center">Low</p>
+              </div>
+              <div class="col d-flex flex-column">
+                <span class="index-number text-center">{{getWindDirection}}</span>
+                <p class="index-name mt-auto mb-0 text-center">Wind direction</p>
+              </div>
+              <div class="col d-flex flex-column">
+                <span class="index-number text-center">{{getPressure}} mmHg</span>
+                <p class="index-name mt-auto mb-0 text-center">Pressure</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -77,7 +101,7 @@
       },
 
       currentDate(){
-        let date =  moment().format('L')
+        let date =  moment().format('LL')
         return date
       },
 
@@ -88,7 +112,35 @@
           return "°"
         }else return "K"
       },
-
+      getPressure(){
+        // 1 hPa = 0.75006375541921 mmHg
+        const eq = 0.75006375541921;
+        let prevData = this.weatherCache.current.pressure;
+        let finalData = Math.round(prevData*eq);
+        return finalData
+      },
+      getWindDirection(){
+        let wind = this.weatherCache.current.wind_deg;
+        switch(true){
+          case wind >= 348.75 && wind < 11.25  : return "N";
+          case wind >= 11.25  && wind < 33.75  : return "NNE";
+          case wind >= 33.75  && wind < 56.25 : return "NE";
+          case wind >= 56.25  && wind < 78.75 : return "ENE";
+          case wind >= 78.75  && wind < 101.25 : return "E";
+          case wind >= 101.25 && wind < 123.75 : return "ESE";
+          case wind >= 123.75 && wind < 146.25 : return "SE";
+          case wind >= 146.25 && wind < 168.75 : return "SSE"
+          case wind >= 168.75 && wind < 191.25 : return "S";
+          case wind >= 191.25 && wind < 213.75 : return "SSW";
+          case wind >= 213.75 && wind < 236.25 : return "SW";
+          case wind >= 236.25 && wind < 258.75 : return "WSW";
+          case wind >= 258.75 && wind < 281.25 : return "W";
+          case wind >= 281.25 && wind < 303.75 : return "WNW";
+          case wind >= 303.75 && wind < 326.25 : return "NW";
+          case wind >= 326.25 && wind < 348.75 : return "NNW";
+          default : return "N/A"
+        }
+      },
       getWeatherClass(){
         if(this.weatherCache === null) return "no-icon" ;
         let weatherIcon = this.weatherCache.current.weather[0]["icon"];
