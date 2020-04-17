@@ -12,16 +12,26 @@
 								type="text" 
 								placeholder="Enter location"/>
 
-							<button
-									type="submit"
-									@click.prevent="getCitiesArray"
-									class="search-btn text-uppercase font-weight-bold text-right">
-								<i class="fa fa-search" aria-hidden="true"></i>
-							</button>
+								<transition name="fade">
+									<button
+										v-if="!searching"
+										key="not-searching"
+										type="submit"
+										@click.prevent="getCitiesArray"
+										class="search-btn text-uppercase font-weight-bold text-right">	
+											<i class="fa fa-search" aria-hidden="true"></i>
+										
+									</button>
+									<button class="search-btn searching-status" v-else key="loading">
+										<div class="spinner-ring"><div></div><div></div><div></div><div></div></div>
+									</button>
+									
+								</transition>
+
 						</div>
 
 						<div class="matches-city-list list-group list-group-flush list-unstyled" 
-									v-if="matchesCities.length">
+									v-if="matchesCities">
 							<a 
 								href="#" 
 								class="list-group-item list-group-item-action list-group-item-custom"
@@ -31,6 +41,7 @@
 								{{city.name}} / {{city.country}}
 							</a>
 						</div>
+						
 						<div v-if="chosenLocation !== null"
 								class="footer">
 
@@ -84,6 +95,7 @@
 				matchesCities: [],
 				chosenLocation: null,
 				selectedUnit: null,
+				searching: false,
 			}
 		},
 		mounted() {
@@ -101,6 +113,8 @@
 		},
 		methods:{
 			getCitiesArray(){
+				this.searching = true;
+
 				if(!this.enteredLocation){
 					this.error = "No entered location";
 					return;
@@ -116,9 +130,11 @@
 						if(this.matchesCities.length === 0){
 							throw "Location not found!"
 						}
+						this.searching = false;
 					})
 					.catch((error)=>{
 						this.error = error;
+						this.searching = false;
 					})
 			},
 
