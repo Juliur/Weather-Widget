@@ -171,7 +171,18 @@ p.temp{
     color: rgba(255, 255, 255, 0.794);
     font-size: 1.2rem;
 }
-
+.error-msg{
+    opacity: .75;
+}
+.error-msg i{
+    color: #fa8072fc;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+}
 .search-btn{
     flex-grow: 1;
     color: white;

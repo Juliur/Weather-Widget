@@ -21,7 +21,7 @@
 						</div>
 
 						<div class="matches-city-list list-group list-group-flush list-unstyled" 
-									v-if="matchesCities.length>0">
+									v-if="matchesCities.length">
 							<a 
 								href="#" 
 								class="list-group-item list-group-item-action list-group-item-custom"
@@ -33,6 +33,14 @@
 						</div>
 						<div v-if="chosenLocation !== null"
 								class="footer">
+
+								<transition name="fade">
+									<p v-if="error" class="error-msg">
+										<i class="fa fa-times-circle" aria-hidden="true"></i>
+										{{error}}
+									</p>
+								</transition>
+
 								<p>
 									Selected location: <span> {{ showChosenLocation().city }} / {{  showChosenLocation().country }} </span>
 								</p>
@@ -71,6 +79,7 @@
 		name: "SettingsPage",
 		data(){
 			return{
+				error: "",
 				enteredLocation: "",
 				matchesCities: [],
 				chosenLocation: null,
@@ -92,22 +101,25 @@
 		},
 		methods:{
 			getCitiesArray(){
-				if(!this.enteredLocation) return;
-				try{
-					axios.get("/city.list.min.json")
+				if(!this.enteredLocation){
+					this.error = "No entered location";
+					return;
+				}
+				this.error = "";
+				axios
+					.get("/city.list.min.json")
 					.then((response)=>{
 						let citiesArray = response.data;
 						this.matchesCities = citiesArray.filter(
 							city => city.name.toLowerCase().startsWith(this.enteredLocation.toLowerCase())
-						);
-						if(this.matchesCities.length === 0) {
-							throw new Error("Array is empty!")
+						)
+						if(this.matchesCities.length === 0){
+							throw "Location not found!"
 						}
 					})
-				} catch(error) {
-						console.log(error)
-						return "Location not found"
-					} 
+					.catch((error)=>{
+						this.error = error;
+					})
 			},
 
 			chooseLocation(city){
@@ -135,7 +147,13 @@
 				let city = result.name;
 				let country = result.country;
 				return {city, country}
-			}
+			},
+			// clearMessageField(){
+			// 	// if(this.enteredLocation.length === 0){
+			// 	// 	this.error = "";
+			// 	// }
+			// 	console.log(this.enteredLocation)
+			// }
 		},
 	}
 </script>
