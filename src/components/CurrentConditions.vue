@@ -17,7 +17,7 @@
       <div class="container-fluid p-0">
         <div class="row">
           <div class="col-sm-12 col-md-6">
-            <div class="row my-4 my-md-0">
+            <div class="row my-4 my-md-0 mt-lg-2">
               <div class="col-6 col-lg-7 ">
                 <div class="mx-auto icon-big"
                     :class="getWeatherClass">
@@ -36,7 +36,7 @@
           </div>
 
           <div class="col-sm-12 col-md-6">
-            <div class="row h-100 align-content-between">
+            <div class="row h-100 align-content-between border-custom">
               <div class="col d-flex flex-column">
                 <span class="index-number text-center">
                   {{Math.round(weatherCache.daily[0]["temp"]["max"])}}&#8451;

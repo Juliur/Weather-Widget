@@ -1,5 +1,5 @@
 <template>
-	<div id="weather-forecast" class="container-fluid" v-if="weatherCache !== null">
+	<div id="weather-forecast" class="container-fluid mt-3" v-if="weatherCache !== null">
 		<div class="row">
 			<div class="col-lg-2 col-md-4 col-6 text-center"
 					v-for="day in weatherCache.daily.slice(1,7)" :key="day.dt">

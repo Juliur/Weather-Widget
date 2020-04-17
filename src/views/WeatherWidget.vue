@@ -1,5 +1,5 @@
 <template>   
-	<div id="app" class="container-fluid h-100"
+	<div id="app" class="container-fluid"
 			:style="{ backgroundImage: 'url(' +  backgroundURL + ')' }"
 	>
 		<div class="row align-items-center h-100">

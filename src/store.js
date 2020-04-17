@@ -79,6 +79,7 @@ export default new Vuex.Store({
 							key: API_KEY_BACKGROUND,
 							q: response,
 							image_type: "photo",
+							orientation: "horizontal",
 							pretty: "true",
 							per_page: 5
 						}
