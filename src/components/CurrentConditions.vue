@@ -17,18 +17,18 @@
       <div class="container-fluid p-0">
         <div class="row">
           <div class="col-sm-12 col-md-6">
-            <div class="row my-4 my-md-0 mt-lg-2">
-              <div class="col-6 col-lg-7 ">
-                <div class="mx-auto icon-big"
+            <div class="row d-flex align-items-center h-100 no-gutters">
+              <div class="col-6 d-flex">
+                <div class="icon-big"
                     :class="getWeatherClass">
                 </div>
               </div>
-              <div class="col-6 col-lg-5 d-flex flex-column">
+              <div class="col-6 d-flex flex-column">
                 <div class="temp-wrap d-inline-flex justify-content-center">
                   <p class="current-temp mb-0">{{ Math.round(weatherCache.current.temp) }}</p>
                   <span class="degree-symbol font-weight-bold mb-0">{{ showUnitSymbol }} </span>
                 </div>
-                <p class="weather-desc text-capitalize text-center mb-0 mt-2">
+                <p class="weather-desc text-capitalize text-center mb-0">
                   {{ weatherCache.current.weather[0]["description"]}}
                 </p>
               </div>
@@ -37,34 +37,46 @@
 
           <div class="col-sm-12 col-md-6">
             <div class="row h-100 align-content-between border-custom">
-              <div class="col d-flex flex-column">
-                <span class="index-number text-center">
-                  {{Math.round(weatherCache.daily[0]["temp"]["max"])}}&#8451;
-                </span>
-                <p class="index-name text-center mt-auto mb-0">High</p>
+              <div class="col">
+                <div class="d-flex flex-column align-items-center my-4 my-lg-0">
+                  <span class="index-number mb-2">
+                    {{Math.round(weatherCache.daily[0]["temp"]["max"])}}&#8451;
+                  </span>
+                  <p class="index-name mb-0 mt-0">High</p>
+                </div>
               </div>
-              <div class="col d-flex flex-column">
-                <span class="index-number text-center">{{weatherCache.current.wind_speed}} km/h</span>
-                <p class="index-name text-center mt-auto mb-0">Wind speed</p> 
+              <div class="col">
+                <div class="d-flex flex-column align-items-center my-4 my-lg-0">
+                  <span class="index-number mb-2">{{weatherCache.current.wind_speed}} km/h</span>
+                  <p class="index-name mb-0">Wind speed</p> 
+                </div>              
               </div>
-              <div class="col d-flex flex-column">
-                <span class="index-number text-center">{{weatherCache.current.humidity}}%</span>
-                <p class="index-name text-center mt-auto mb-0">Humidity</p>
+              <div class="col">
+                <div class="d-flex flex-column align-items-center my-4 my-lg-0">
+                  <span class="index-number mb-2">{{weatherCache.current.humidity}}%</span>
+                  <p class="index-name mb-0">Humidity</p>
+                </div>
               </div>
-              <div class="w-100 mt-3"></div>
-              <div class="col d-flex flex-column">
-                <span class="index-number text-center">
-                  {{Math.round(weatherCache.daily[0]["temp"]["min"])}} &#8451;
-                </span>
-                <p class="index-name mt-auto mb-0 text-center">Low</p>
+              <div class="w-100"></div>
+              <div class="col">
+                <div class="d-flex flex-column align-items-center my-4 my-lg-0">
+                  <span class="index-number mb-2">
+                    {{Math.round(weatherCache.daily[0]["temp"]["min"])}} &#8451;
+                  </span>
+                  <p class="index-name mb-0 mt-auto">Low</p>
+                </div>
               </div>
-              <div class="col d-flex flex-column">
-                <span class="index-number text-center">{{getWindDirection}}</span>
-                <p class="index-name mt-auto mb-0 text-center">Wind direction</p>
+              <div class="col">
+                <div class="d-flex flex-column align-items-center my-4 my-lg-0">
+                  <span class="index-number mb-2">{{getWindDirection}}</span>
+                  <p class="index-name mb-0">Wind direction</p>
+                </div>
               </div>
-              <div class="col d-flex flex-column">
-                <span class="index-number text-center">{{getPressure}} mmHg</span>
-                <p class="index-name mt-auto mb-0 text-center">Pressure</p>
+              <div class="col">
+                <div class="d-flex flex-column align-items-center my-4 my-lg-0">
+                  <span class="index-number mb-2">{{getPressure}} mmHg</span>
+                  <p class="index-name mb-0">Pressure</p>
+                </div>
               </div>
             </div>
           </div>

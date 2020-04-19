@@ -30,69 +30,65 @@ export default new Vuex.Store({
 	},
 
 	actions:{
-		updateWeather({commit}, params){
-			try {
-				axios({
-					method: 'get',
-					url: API_URL_WEATHER,
-					params:{
-						lat: params.lat,
-						lon: params.lon,
-						units: params.unit,
-						appid: API_KEY_WEATHER,
-					}
-				})
-				.then((response)=>{
-					let weatherDesc = response.data.current.weather[0]["main"],
-						unixCurrent = response.data.current.dt;
-						// unixSunrise = response.data.current.sunrise,
-						// unixSunset = response.data.current.sunset,
+		async updateWeather({commit}, params){
+			return await axios({
+				method: 'get',
+				url: API_URL_WEATHER,
+				params:{
+					lat: params.lat,
+					lon: params.lon,
+					units: params.unit,
+					appid: API_KEY_WEATHER,
+				}
+			})
+			.then((response)=>{
+				let weatherDesc = response.data.current.weather[0]["main"],
+					unixCurrent = response.data.current.dt;
 
-					function dayTime(current){
-						let currentTime = moment.unix(current).format("HH");
-								// futureSunrise = moment.unix(sunrise).format("HH"),
-								// futureSunset = moment.unix(sunset).format("HH");
-						let morning = (currentTime >= 4 && currentTime <= 11),
-								afternoon = (currentTime >= 12 && currentTime <= 16),
-								evening = (currentTime >= 17 && currentTime <= 20),
-								night = (currentTime >= 21 || currentTime <= 3);
-						if(morning){
-							return "morning"
-						}else if(afternoon){
-							return "day"
-						}else if(evening){
-							return "evening"
-						}else if(night){
-							return night
-						}
+				function dayTime(current){
+					let currentTime = moment.unix(current).format("HH");
+					let morning = (currentTime >= 4 && currentTime <= 11),
+							afternoon = (currentTime >= 12 && currentTime <= 16),
+							evening = (currentTime >= 17 && currentTime <= 20),
+							night = (currentTime >= 21 || currentTime <= 3);
+					if(morning){
+						return "morning"
+					}else if(afternoon){
+						return "day"
+					}else if(evening){
+						return "evening"
+					}else if(night){
+						return "night"
 					}
-					
-					let imgQuery = weatherDesc.toLowerCase() + "+" + dayTime(unixCurrent);
-					commit('setWeatherCache', response.data);
-					return imgQuery
+				}
+				
+				let imgQuery = weatherDesc.toLowerCase() + "+" + dayTime(unixCurrent) + "+weather";
+				commit('setWeatherCache', response.data);
+				return imgQuery
+			})
+			.then((response)=>{
+				return axios({
+					method: 'get',
+					url: API_URL_BACKGROUND,
+					params:{
+						key: API_KEY_BACKGROUND,
+						q: response,
+						image_type: "photo",
+						orientation: "horizontal",
+						pretty: "true",
+						per_page: 3,
+					}
 				})
-				.then((response)=>{
-					return axios({
-						method: 'get',
-						url: API_URL_BACKGROUND,
-						params:{
-							key: API_KEY_BACKGROUND,
-							q: response,
-							image_type: "photo",
-							orientation: "horizontal",
-							pretty: "true",
-							per_page: 5
-						}
-					})
-				})
-				.then((response)=>{
-					console.log(response)
-					let imageURL = response.data.hits[0]["largeImageURL"];
-					commit('setBackroundURL', imageURL);
-				})
-			}catch(error){
+			})
+			.then((response)=>{
+				console.log(response)
+				let randomNumber = Math.floor(Math.random() * response.data.hits.length);
+				let imageURL = response.data.hits[randomNumber]["largeImageURL"];
+				commit('setBackroundURL', imageURL);
+			})
+			.catch(error => {
 				console.log(error);
-			}
+			})
 		},
 		chosenLocation({commit}){
 			let result = JSON.parse(localStorage.getItem('chosenLocation'));

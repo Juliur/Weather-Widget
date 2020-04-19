@@ -19,29 +19,26 @@
 										type="submit"
 										@click.prevent="getCitiesArray"
 										class="search-btn text-uppercase font-weight-bold text-right">	
-											<i class="fa fa-search" aria-hidden="true"></i>
-										
+											<i class="fa fa-search fa-lg" aria-hidden="true"></i>
 									</button>
 									<button class="search-btn searching-status" v-else key="loading">
-										<div class="spinner-ring"><div></div><div></div><div></div><div></div></div>
+										<div class="spinner-ring"></div>
 									</button>
-									
 								</transition>
-
 						</div>
 
-						<div class="matches-city-list list-group list-group-flush list-unstyled" 
-									v-if="matchesCities">
-							<a 
-								href="#" 
-								class="list-group-item list-group-item-action list-group-item-custom"
-								v-for="city in matchesCities" 
-								:key="city.id"
-								@click.prevent="chooseLocation(city)">
-								{{city.name}} / {{city.country}}
-							</a>
+						<div class="matches-city-list list-group list-group-flush list-unstyled"
+								v-if="matchesCities">
+								<a 
+									href="#" 
+									class="list-group-item list-group-item-action list-group-item-custom"
+									v-for="city in matchesCities" 
+									:key="city.id"
+									@click.prevent="chooseLocation(city)">
+									{{city.name}} / {{city.country}}
+								</a>
 						</div>
-						
+				
 						<div v-if="chosenLocation !== null"
 								class="footer">
 
@@ -117,6 +114,7 @@
 
 				if(!this.enteredLocation){
 					this.error = "No entered location";
+					this.searching = false;
 					return;
 				}
 				this.error = "";
@@ -141,6 +139,7 @@
 			chooseLocation(city){
 				this.chosenLocation = city;
 				this.saveChosenLocation();
+				this.matchesCities = [];
 			},
 
 			saveChosenLocation(){
@@ -164,12 +163,6 @@
 				let country = result.country;
 				return {city, country}
 			},
-			// clearMessageField(){
-			// 	// if(this.enteredLocation.length === 0){
-			// 	// 	this.error = "";
-			// 	// }
-			// 	console.log(this.enteredLocation)
-			// }
 		},
 	}
 </script>

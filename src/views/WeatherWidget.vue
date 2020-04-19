@@ -3,7 +3,7 @@
 			:style="{ backgroundImage: 'url(' +  backgroundURL + ')' }"
 	>
 		<div class="row align-items-center h-100">
-			<div class="col-lg-8 offset-lg-2 col-sm-10 offset-sm-1 col-12">
+			<div class="col-lg-8 offset-lg-2 col-12">
 				<div class="row">	
 					<div id="weather-widget">
 						<CurrentConditions />
